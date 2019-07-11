@@ -7,6 +7,8 @@ var names = ['Adara', 'Adena', 'Adrianne', 'Alarice', 'Alvita', 'Amara', 'Ambika
 'Kimberly', 'Killian', 'Kory', 'Lilith', 'Lucretia', 'Lysha', 'Mercedes', 'Mia', 'Maura', 'Perdita', 'Quella',
 'Riona', 'Safiya', 'Salina', 'Severin', 'Sidonia', 'Sirena', 'Solita', 'Tempest', 'Thea', 'Treva', 'Trista', 'Vala', 'Winta']
 
+var alphabet = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
+
 var markov = {}
 
 func loadNames(markov, names):
@@ -31,15 +33,14 @@ func getName (firstChar, minLength, maxLength):
 	if firstChar:
 		name += firstChar
 	else:
-		name += "a" #change to random letter later
+		var random_letter = alphabet[roll(0, alphabet.size()-1)]
+		name += random_letter
 	while count < maxLength:
 		var new_last = name.length()-1
 		var nextLetter = getNextLetter(name[new_last]) #name.getindexof(count)
 		if str(nextLetter) == ".":
 			if count > minLength:
 				return name
-			else:
-				print("?")
 		else:
 			name += str(nextLetter)
 			count+=1
@@ -47,7 +48,7 @@ func getName (firstChar, minLength, maxLength):
 
 func getNextLetter(letter):
 	var thisList = markov[letter]
-	return thisList[roll(0, thisList.size())]
+	return thisList[roll(0, thisList.size()-1)]
 
 # Random number generator
 func roll(l,h):
@@ -56,4 +57,4 @@ func roll(l,h):
 func _ready():
 	randomize()
 	loadNames(markov, names)
-	print(getName('D', 5, 7))
+	print(getName('A', 5, 7))
