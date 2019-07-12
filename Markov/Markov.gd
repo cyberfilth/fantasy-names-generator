@@ -13,19 +13,19 @@ var markov = {}
 
 func loadNames(markov, names):
 	for name in names:
-		var currName = name #or possibly just name.
+		var currName = name
 		for i in range(currName.length()):
-			var currLetter = currName[i] ##or currname.getLetterAt.. or something like that
+			var currLetter = currName[i].to_lower()
 			var letterToAdd;
 			if i == (currName.length() - 1):
 				letterToAdd = "."
 			else:
-				letterToAdd = currName[i+1] #or currname.getLetterAt.. or something like that
+				letterToAdd = currName[i+1]
 			var tempList = []
 			if markov.has(currLetter):
 				tempList = markov[currLetter]
 			tempList.append(letterToAdd)
-			markov[currLetter] = tempList #May be a way of doing this in 1 command
+			markov[currLetter] = tempList
 
 func getName (firstChar, minLength, maxLength):
 	var count = 1
@@ -37,7 +37,7 @@ func getName (firstChar, minLength, maxLength):
 		name += random_letter
 	while count < maxLength:
 		var new_last = name.length()-1
-		var nextLetter = getNextLetter(name[new_last]) #name.getindexof(count)
+		var nextLetter = getNextLetter(name[new_last])
 		if str(nextLetter) == ".":
 			if count > minLength:
 				return name
@@ -57,4 +57,11 @@ func roll(l,h):
 func _ready():
 	randomize()
 	loadNames(markov, names)
-	print(getName('A', 5, 7))
+	var populated_list = ""
+	var new_name = ""
+	for i in range(20):
+		var random_letter = alphabet[roll(0, alphabet.size()-1)]
+		new_name = getName(random_letter, 4, 7)
+		new_name = new_name.capitalize()
+		populated_list += new_name+"\n"
+	print(populated_list)

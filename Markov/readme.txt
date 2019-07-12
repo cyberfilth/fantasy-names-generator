@@ -1,0 +1,1 @@
+A 'pseudo' Markov Chain generation algorithm
